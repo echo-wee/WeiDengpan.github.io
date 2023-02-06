@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./MIWW.jpg">
+    <title>MIWW</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        color: aliceblue;
+    }
+
+    body {
+        background-color: #000;
+    }
+
+    .head {
+        width: 75%;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        justify-content: space-between;
+
+    }
+
+    .box {
+        width: 35px;
+        height: 35px;
+        border: 1px solid aliceblue;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 27px;
+        font-weight: bold;
+    }
+
+    .left {
+        font-size: 30px;
+    }
+
+    .right {
+        width: 150px;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .mint {
+        padding: 5px 15px;
+        border: 2px solid aliceblue;
+        cursor: pointer;
+        border-radius: 20px;
+    }
+
+    .bottom a {
+        display: block;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+    }
+
+    .bottom a svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .content {
+        width: 75%;
+        height: auto;
+        margin: 0 auto;
+        padding-top: 40px;
+        background-image: linear-gradient(to right, rgb(243, 243, 243) 0%, rgb(248, 244, 244) 50%, transparent 50%);
+        background-size: 28px 0.5px;
+        background-repeat: repeat-x;
+        display: flex;
+        justify-content: space-between;
+        overflow: hidden;
+    }
+
+    .title {
+        width: 45%;
+        font-size: 20px;
+        line-height: 60px;
+        padding: 0 15px;
+        box-sizing: border-box;
+        margin-right: 15px;
+    }
+
+    .main {
+        width: 50%;
+    }
+
+    .swiper {
+        width: 95%;
+        margin-bottom: 30px;
+        display: flex;
+        height: auto;
+        justify-content: center;
+        box-shadow: 1px 1px 30px #ffffff76;
+        border-radius: 10px;
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .img-box {
+        width: 90%;
+        height: 100%;
+        position: relative;
+    }
+
+    .img-box li {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 2s;
+    }
+
+    .img-box li.active {
+        opacity: 1;
+    }
+
+    .img-box img {
+        width: 100%;
+    }
+
+    .fqaBox {
+        background-color: #000000;
+        z-index: 999;
+        width: 800px;
+        height: 0px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 1px 1px 10px #ffffff3b;
+        border-radius: 20px;
+        transition: all .5s;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    .fqa {
+        width: 30px;
+        height: 30px;
+        border: 2px solid #FFF;
+        border-radius: 50%;
+        font-size: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .clear {
+        position: absolute;
+        right: 30px;
+        font-size: 50px;
+        top: 10px;
+        cursor: pointer;
+    }
+
+    .bottom {
+        width: 75%;
+        position: absolute;
+        bottom: 0px;
+        height: 90px;
+        display: flex;
+        align-items: center;
+        border-top: 1px solid #ffffff7d;
+        transform: translate(17%);
+        justify-content: space-between;
+    }
+
+    .icon {
+        display: flex;
+        width: 80px;
+        justify-content: space-between;
+    }
+
+    .fqaContent p {
+        font-size: 16px;
+        margin: 32px;
+        margin-left: 100px;
+    }
+
+    .fqaContent span {
+        margin-left: 100px;
+        margin-top: 20px;
+        display: block;
+    }
+</style>
+
+<body>
+    <div class="head">
+        <div class="left">
+            M I W W
+        </div>
+        <div class="right">
+            <div class="fqa">
+                ?
+            </div>
+
+            <div class="mint">
+                m i n t
+            </div>
+        </div>
+    </div>
+    <div class="fqaBox">
+        <div class="clear">
+            X
+        </div>
+        <div class="fqaContent">
+            <span>
+                1. What is Checks - miww Edition.
+            </span>
+
+            <p>
+                Inspired by Checks - VV Edition combines digital currency derivatives.
+            </p>
+            <span>
+                2. What network is this.
+            </span>
+            <p>
+                Ethereum ERC-721.
+            </p>
+            <span>
+                3. Where I can buy Checks - miww Edition.
+            </span>
+
+            <p>
+                you can buy it at opensea
+            </p>
+
+            <span>
+                4. What is the number of items and how much money can be obtained?
+            </span>
+
+            <p> Project 0.001 Each account can have up to mint2, which is almost free, and we will open mint time for 4
+                hours</p>
+
+            <span> 5. Can the team's work be used commercially?</span>
+
+            <p> Yes, we are very supportive of the reproduction of our works</p>
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="title">
+
+        </div>
+        <ul class="circle-box">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+        <div class="main">
+            <span class="right-btn"></span>
+            <div class="swiper">
+                <ul class="img-box">
+                    <li class="active">
+                        <img src="https://raw.githubusercontent.com/WeiDengpan/MIWW.github.io/main/MIWW.jpg">
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <p>© 2023 MIWW</p>
+        <div class="icon">
+            <a href="#" class="opensea">
+                <svg t="1675660482121" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="2004" width="128" height="128">
+                    <path
+                        d="M136.106667 566.528l2.986666-4.693333 180.053334-281.642667a6.144 6.144 0 0 1 10.794666 0.768c30.08 67.413333 56.064 151.253333 43.904 203.434667-5.205333 21.504-19.413333 50.56-35.413333 77.44a141.738667 141.738667 0 0 1-6.784 11.477333 6.101333 6.101333 0 0 1-5.12 2.688h-185.173333a6.144 6.144 0 0 1-5.248-9.472z"
+                        fill="#ffffff" p-id="2005"></path>
+                    <path
+                        d="M938.666667 618.88v44.586667a6.4 6.4 0 0 1-3.84 5.845333c-13.952 5.973333-61.653333 27.861333-81.493334 55.466667C802.688 795.221333 764.032 896 677.546667 896H316.8C188.928 896 85.333333 792.021333 85.333333 663.765333v-4.138666c0-3.413333 2.773333-6.186667 6.186667-6.186667h201.088c4.010667 0 6.912 3.712 6.570667 7.594667-1.450667 13.098667 0.981333 26.453333 7.168 38.613333 11.946667 24.277333 36.693333 39.424 63.445333 39.424H469.333333V661.333333H370.901333a6.357333 6.357333 0 0 1-5.12-9.941333c1.066667-1.664 2.304-3.370667 3.584-5.290667 9.301333-13.226667 22.613333-33.749333 35.84-57.173333 9.002667-15.786667 17.749333-32.64 24.789334-49.536 1.450667-3.072 2.56-6.186667 3.712-9.258667 1.92-5.418667 3.925333-10.453333 5.333333-15.488 1.408-4.266667 2.56-8.746667 3.712-12.970666 3.328-14.336 4.736-29.568 4.736-45.354667 0-6.186667-0.256-12.672-0.853333-18.858667a244.906667 244.906667 0 0 0-1.962667-20.266666 208.981333 208.981333 0 0 0-2.773333-18.048 304.64 304.64 0 0 0-5.717334-27.008l-0.768-3.413334c-1.706667-6.186667-3.114667-12.117333-5.12-18.304A690.261333 690.261333 0 0 0 411.392 294.4c-2.517333-7.04-5.333333-13.781333-8.192-20.565333-4.181333-10.154667-8.448-19.413333-12.373333-28.16a393.728 393.728 0 0 1-5.418667-11.306667 398.72 398.72 0 0 0-5.888-12.373333c-1.408-3.029333-3.072-5.888-4.181333-8.746667l-12.16-22.442667a3.968 3.968 0 0 1 4.48-5.76l76.074666 20.608h0.213334l0.298666 0.085334 10.026667 2.773333 11.008 3.114667 4.053333 1.152v-45.226667c0-21.845333 17.493333-39.552 39.125334-39.552 10.794667 0 20.608 4.394667 27.648 11.605333a39.765333 39.765333 0 0 1 11.434666 27.946667V234.666667l8.106667 2.261333c0.64 0.213333 1.28 0.512 1.877333 0.938667 1.962667 1.493333 4.821333 3.712 8.448 6.4 2.858667 2.261333 5.888 5.034667 9.6 7.893333 7.338667 5.888 16.085333 13.525333 25.685334 22.272 2.56 2.176 5.034667 4.48 7.296 6.741333 12.373333 11.52 26.24 25.045333 39.466666 39.978667 3.712 4.181333 7.338667 8.448 11.050667 12.928 3.669333 4.565333 7.594667 9.045333 11.008 13.525333 4.48 5.973333 9.301333 12.16 13.525333 18.602667 1.962667 3.072 4.266667 6.186667 6.186667 9.258667 5.376 8.192 10.154667 16.64 14.72 25.088 1.92 3.925333 3.882667 8.192 5.589333 12.373333 5.077333 11.306667 9.045333 22.826667 11.605334 34.346667 0.768 2.517333 1.365333 5.205333 1.621333 7.637333v0.554667c0.853333 3.413333 1.152 7.04 1.450667 10.752a114.901333 114.901333 0 0 1-6.186667 50.346666c-1.706667 4.821333-3.413333 9.856-5.632 14.634667-4.266667 9.898667-9.301333 19.754667-15.274667 29.013333-1.92 3.413333-4.224 7.04-6.485333 10.453334-2.474667 3.626667-5.034667 7.04-7.338667 10.368-3.114667 4.266667-6.442667 8.746667-9.856 12.757333a135.253333 135.253333 0 0 1-9.6 12.074667c-4.778667 5.632-9.344 10.965333-14.08 16.085333a146.773333 146.773333 0 0 1-9.045333 9.813333c-3.072 3.413333-6.186667 6.442667-9.045333 9.301334a360.192 360.192 0 0 1-12.074667 11.52l-7.808 7.168a6.4 6.4 0 0 1-4.224 1.578666h-60.586667v77.738667h76.245334c17.066667 0 33.28-6.058667 46.378666-17.152 4.48-3.925333 24.021333-20.821333 47.146667-46.378667a5.888 5.888 0 0 1 2.901333-1.749333l210.56-60.885333a6.229333 6.229333 0 0 1 7.893334 5.973333z"
+                        fill="#ffffff" p-id="2006"></path>
+                </svg>
+            </a>
+            <a href="https://twitter.com/miww_eth" class="twitter">
+                <svg t="1675660553191" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="2462" width="128" height="128">
+                    <path
+                        d="M928 254.3c-30.6 13.2-63.9 22.7-98.2 26.4 35.4-21.1 62.3-54.4 75-94-32.7 19.5-69.7 33.8-108.2 41.2C765.4 194.6 721.1 174 672 174c-94.5 0-170.5 76.6-170.5 170.6 0 13.2 1.6 26.4 4.2 39.1-141.5-7.4-267.7-75-351.6-178.5-14.8 25.4-23.2 54.4-23.2 86.1 0 59.2 30.1 111.4 76 142.1-28-1.1-54.4-9-77.1-21.7v2.1c0 82.9 58.6 151.6 136.7 167.4-14.3 3.7-29.6 5.8-44.9 5.8-11.1 0-21.6-1.1-32.2-2.6C211 652 273.9 701.1 348.8 702.7c-58.6 45.9-132 72.9-211.7 72.9-14.3 0-27.5-0.5-41.2-2.1C171.5 822 261.2 850 357.8 850 671.4 850 843 590.2 843 364.7c0-7.4 0-14.8-0.5-22.2 33.2-24.3 62.3-54.4 85.5-88.2z"
+                        fill="#ffffff" p-id="2463"></path>
+                </svg>
+            </a>
+        </div>
+    </div>
+</body>
+<script>
+    let src = `Supported ticket issuance - VV version combined with digital currency, we create a new combination of 80 popular token check products on it`
+    let title = document.querySelector('.title');
+    let fqa = document.querySelector('.fqa');
+    let fqaBox = document.querySelector('.fqaBox');
+    let clear = document.querySelector('.clear');
+    let content = document.querySelector('.content')
+    fqa.addEventListener('click', () => {
+        fqaBox.style.height = '600px';
+        fqaBox.style.padding = '20px';
+        content.style.display = 'none';
+    })
+    clear.addEventListener('click', () => {
+        fqaBox.style.height = '0px';
+        fqaBox.style.padding = '0px';
+        content.style.display = 'flex';
+
+    })
+    let strarr = src.split('');
+    let i = 0;
+    let timers = setInterval(() => {
+        title.innerHTML += strarr[i];
+        i++;
+        if (i == strarr.length) {
+            clearInterval(timers)
+        }
+    }, 50)
+</script>
+
+</html>
