@@ -1,296 +1,204 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
-    <title>Ordinals-Azuki Bcion</title>
-
+    <title>网页跳转到小程序示例</title>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <style type="text/css">
+        #button {
+            display: inline-block;
+            margin: 20px;
+            padding: 10px 20px;
+            background-color: #09f;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 16px;
+            text-decoration: none;
+        }
+    </style>
 </head>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
-
-    :root {
-        font-size: 15px;
-    }
-
-    :root {
-        font-size: 15px;
-    }
-
-    body {
-        font-family: 'Quicksand', sans-serif;
-        margin: 0;
-        min-height: 100vh;
-        background-color: #e493d0;
-        background-image:
-            radial-gradient(closest-side, rgba(235, 105, 78, 1), rgba(235, 105, 78, 0)),
-            radial-gradient(closest-side, rgb(68, 122, 239), rgba(243, 11, 164, 0)),
-            radial-gradient(closest-side, rgba(254, 234, 131, 1), rgba(254, 234, 131, 0)),
-            radial-gradient(closest-side, rgba(170, 142, 245, 1), rgba(170, 142, 245, 0)),
-            radial-gradient(closest-side, rgb(103, 222, 109), rgba(248, 192, 147, 0));
-        background-size:
-            130vmax 130vmax,
-            80vmax 80vmax,
-            90vmax 90vmax,
-            110vmax 110vmax,
-            90vmax 90vmax;
-        background-position:
-            -80vmax -80vmax,
-            60vmax -30vmax,
-            10vmax 10vmax,
-            -30vmax -10vmax,
-            50vmax 50vmax;
-        background-repeat: no-repeat;
-        animation: 5s movement linear infinite;
-    }
-
-    body::after {
-        content: '';
-        display: block;
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-    }
-
-    @keyframes movement {
-
-        0%,
-        100% {
-            background-size:
-                130vmax 130vmax,
-                80vmax 80vmax,
-                90vmax 90vmax,
-                110vmax 110vmax,
-                90vmax 90vmax;
-            background-position:
-                -80vmax -80vmax,
-                60vmax -30vmax,
-                10vmax 10vmax,
-                -30vmax -10vmax,
-                50vmax 50vmax;
-        }
-
-        25% {
-            background-size:
-                100vmax 100vmax,
-                90vmax 90vmax,
-                100vmax 100vmax,
-                90vmax 90vmax,
-                60vmax 60vmax;
-            background-position:
-                -60vmax -90vmax,
-                50vmax -40vmax,
-                0vmax -20vmax,
-                -40vmax -20vmax,
-                40vmax 60vmax;
-        }
-
-        50% {
-            background-size:
-                80vmax 80vmax,
-                110vmax 110vmax,
-                80vmax 80vmax,
-                60vmax 60vmax,
-                80vmax 80vmax;
-            background-position:
-                -50vmax -70vmax,
-                40vmax -30vmax,
-                10vmax 0vmax,
-                20vmax 10vmax,
-                30vmax 70vmax;
-        }
-
-        75% {
-            background-size:
-                90vmax 90vmax,
-                90vmax 90vmax,
-                100vmax 100vmax,
-                90vmax 90vmax,
-                70vmax 70vmax;
-            background-position:
-                -50vmax -40vmax,
-                50vmax -30vmax,
-                20vmax 0vmax,
-                -10vmax 10vmax,
-                40vmax 60vmax;
-        }
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    .img1 {
-        width: 350px;
-        position: absolute;
-        bottom: 50px;
-        right: 50px;
-        z-index: 999;
-    }
-
-    .img2 {
-        width: 900px;
-        position: absolute;
-        top: 200px;
-        left: 50px;
-        transition: all 5s;
-        animation-timing-function: value;
-    }
-
-    .content {
-        position: absolute;
-        z-index: 9999;
-        background-color: #0000008b;
-        width: 100%;
-        height: 100vh;
-    }
-
-    a {
-        color: #fff;
-        line-height: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-    }
-
-    .title {
-        display: flex;
-        justify-content: center;
-        margin-top: 100px;
-    }
-
-    .info {
-
-        font-size: 50px;
-        font-weight: bold;
-        color: #fff;
-        margin-top: 50px;
-    }
-
-    .css-126xj0f {
-        z-index: 999999 !important;
-    }
-
-    .info p {
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        margin: 80px 0;
-        width: 300px;
-    }
-
-    .info svg {
-        width: 40px;
-        margin-top: 10px;
-    }
-
-    .tw svg {
-        width: 40px;
-        height: 30px;
-
-    }
-
-    .op svg {
-        width: 90px;
-        height: 40px;
-
-    }
-
-    .info div {
-        float: left;
-    }
-
-    .bootom {
-        position: absolute;
-        bottom: 00px;
-        font-size: 15px;
-        justify-content: center;
-        height: 40px;
-        align-items: center;
-        display: flex;
-        border-top: 1px solid #fff;
-        color: #fff;
-        z-index: 99999;
-        width: 100%;
-    }
-
-    .infoFont {
-        position: absolute;
-        bottom: 20px;
-        font-size: 15px;
-    }
-
-    .mint-button {
-        cursor: pointer;
-    }
-
-    .MuiPaper-root {
-        position: fixed !important;
-        z-index: 9999999999 !important;
-    }
-</style>
 
 <body>
-    <img class="img1" src="/1.png" alt="">
-    <img class="img2" src="./beanzbgwhite.png" alt="">
-    <div class="content">
-        <div class="title">
-            <img class="img3" src="./Azuki.png" alt="">
-        </div>
-        <div class="info">
-            <a href="https://fair.xyz/collection/OrdinalsAzuki">
-                <p>
-                    <div>
-                        mint
-                    </div>
-
-                </p>
-            </a>
-            <a href="https://twitter.com/BTCordinalart">
-                <p>
-                    <div>
-                        Twitter
-                    </div>
-
-
-                </p>
-            </a>
-
-            <a href="https://opensea.io/collection/ordinalsazuki">
-                <p>
-                    <div>
-                        Opensea
-                    </div>
-
-                </p>
-            </a>
-
-        </div>
-    </div>
-    <div class="bootom">
-        ©2023 Ordinals-Azuki Bcion
-    </div>
-</body>
-<script>
-    let i = false
-    setInterval(() => {
-        if (i) {
-            document.querySelector('.img2').style.left = '800px'
-            i = !i;
-        } else {
-            document.querySelector('.img2').style.left = '0px'
-            i = !i;
+    <a href="#" id="button">点击跳转到小程序</a>
+    <script type="text/javascript">
+        // 定义一个函数，用于生成随机字符串
+        function generateNonceStr() {
+            var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var nonceStr = '';
+            for (var i = 0; i < 16; i++) {
+                nonceStr += chars[Math.floor(Math.random() * chars.length)];
+            }
+            return nonceStr;
         }
-    }, 5000)
-</script>
+
+        // 定义一个函数，用于获取当前时间戳
+        function getCurrentTimestamp() {
+            return Math.floor(Date.now() / 1000);
+        }
+
+        // 计算签名值
+        function generateSignature(noncestr, timestamp, url) {
+            var jsApiTicket = 'YOUR_JSAPITICKET'; // 将 YOUR_JSAPITICKET 替换为你从微信服务器获取的 jsapi_ticket
+            var str = 'jsapi_ticket=' + jsApiTicket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url;
+            return sha1(str); // 用 SHA1 算法计算字符串的散列值
+        }
+
+        // 获取当前页面 URL（不包含 # 及其后面的部分）
+        var url = window.location.href.split('#')[0];
+
+        // 生成随机字符串和时间戳
+        var nonceStr = generateNonceStr();
+        var timestamp = getCurrentTimestamp();
+
+        // 生成签名值
+        var signature = generateSignature(nonceStr, timestamp, url);
+
+        // 初始化 JS-SDK
+        wx.config({
+            beta: true,
+            debug: false,
+            appId: 'wx8aab97c24ad34eeb',
+            timestamp: timestamp,
+            nonceStr: nonceStr,
+            signature: signature,
+            jsApiList: ['navigateToMiniProgram', 'switchTab']
+        });
+
+        // 点击按钮时触发该事件处理函数
+        $('#button').click(function () {
+            wx.miniProgram.navigateTo({
+                appId: 'wx8aab97c24ad34eeb',
+                path: 'pages/index/index',
+                extraData: {}, // 附加参数，可在小程序中通过 wx.getLaunchOptionsSync 获取
+                success: function (res) {
+                    console.log('跳转成功：', res);
+                },
+                fail: function (res) {
+                    console.error('跳转失败：', res);
+                }
+            });
+        });
+        function sha1(str) {
+            var blockstart;
+            var i, j;
+            var W = new Array(80);
+            var H0 = 0x67452301;
+            var H1 = 0xEFCDAB89;
+            var H2 = 0x98BADCFE;
+            var H3 = 0x10325476;
+            var H4 = 0xC3D2E1F0;
+            var A, B, C, D, E;
+            var tempValue;
+            str = utf16to8(str);
+            var str_len = str.length;
+            var wordArray = new Array();
+            for (i = 0; i < str_len - 3; i += 4) {
+                j = str.charCodeAt(i) << 24 | str.charCodeAt(i + 1) << 16 |
+                    str.charCodeAt(i + 2) << 8 | str.charCodeAt(i + 3);
+                wordArray.push(j);
+            }
+            switch (str_len % 4) {
+                case 0:
+                    i = 0x080000000;
+                    break;
+                case 1:
+                    i = str.charCodeAt(str_len - 1) << 24 | 0x0800000;
+                    break;
+                case 2:
+                    i = str.charCodeAt(str_len - 2) << 24 | str.charCodeAt(str_len - 1) << 16 | 0x08000;
+                    break;
+                case 3:
+                    i = str.charCodeAt(str_len - 3) << 24 | str.charCodeAt(str_len - 2) << 16 |
+                        str.charCodeAt(str_len - 1) << 8 | 0x80;
+                    break;
+            }
+            wordArray.push(i);
+            while ((wordArray.length % 16) != 14)
+                wordArray.push(0);
+            wordArray.push(str_len >>> 29);
+            wordArray.push((str_len << 3) & 0x0ffffffff);
+            for (blockstart = 0; blockstart < wordArray.length; blockstart += 16) {
+                for (i = 0; i < 16; i++)
+                    W[i] = wordArray[blockstart + i];
+                for (i = 16; i <= 79; i++)
+                    W[i] = rol(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16], 1);
+                A = H0;
+                B = H1;
+                C = H2;
+                D = H3;
+                E = H4;
+                for (i = 0; i <= 19; i++) {
+                    tempValue = (rol(A, 5) + ((B & C) | (~B & D)) + E + W[i] + 0x5A827999) & 0x0ffffffff;
+                    E = D;
+                    D = C;
+                    C = rol(B, 30);
+                    B = A;
+                    A = tempValue;
+                }
+                for (i = 20; i <= 39; i++) {
+                    tempValue = (rol(A, 5) + (B ^ C ^ D) + E + W[i] + 0x6ED9EBA1) & 0x0ffffffff;
+                    E = D;
+                    D = C;
+                    C = rol(B, 30);
+                    B = A;
+                    A = tempValue;
+                }
+                for (i = 40; i <= 59; i++) {
+                    tempValue = (rol(A, 5) + ((B & C) | (B & D) | (C & D)) + E + W[i] + 0x8F1BBCDC) & 0x0ffffffff;
+                    E = D;
+                    D = C;
+                    C = rol(B, 30);
+                    B = A;
+                    A = tempValue;
+                }
+                for (i = 60; i <= 79; i++) {
+                    tempValue = (rol(A, 5) + (B ^ C ^ D) + E + W[i] + 0xCA62C1D6) & 0x0ffffffff;
+                    E = D;
+                    D = C;
+                    C = rol(B, 30);
+                    B = A;
+                    A = tempValue;
+                }
+                H0 = (H0 + A) & 0x0ffffffff;
+                H1 = (H1 + B) & 0x0ffffffff;
+                H2 = (H2 + C) & 0x0ffffffff;
+                H3 = (H3 + D) & 0x0ffffffff;
+                H4 = (H4 + E) & 0x0ffffffff;
+            }
+            return ('00000000' + H0.toString(16)).slice(-8) +
+                ('00000000' + H1.toString(16)).slice(-8) +
+                ('00000000' + H2.toString(16)).slice(-8) +
+                ('00000000' + H3.toString(16)).slice(-8) +
+                ('00000000' + H4.toString(16)).slice(-8);
+        }
+
+        function rol(num, cnt) {
+            return (num << cnt) | (num >>> (32 - cnt));
+        }
+
+        function utf16to8(str) {
+            var out, i, len, c;
+            out = '';
+            len = str.length;
+            for (i = 0; i < len; i++) {
+                c = str.charCodeAt(i);
+                if ((c >= 0x0001) && (c <= 0x007F)) {
+                    out += str.charAt(i);
+                } else if (c > 0x07FF) {
+                    out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F),
+                        0x80 | ((c >> 6) & 0x3F), 0x80 | ((c >> 0) & 0x3F));
+                } else {
+                    out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F),
+                        0x80 | ((c >> 0) & 0x3F));
+                }
+            }
+            return out;
+        }
+
+
+    </script>
+</body>
 
 </html>
