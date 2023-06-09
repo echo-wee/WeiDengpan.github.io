@@ -1,204 +1,125 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>网页跳转到小程序示例</title>
-    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./static/image/ico.ico">
+    <title>Hungerord</title>
+    <link rel="stylesheet" href="./static/css/css.css">
     <style type="text/css">
-        #button {
-            display: inline-block;
-            margin: 20px;
-            padding: 10px 20px;
-            background-color: #09f;
-            color: #fff;
-            border-radius: 5px;
-            font-size: 16px;
-            text-decoration: none;
+        @font-face {
+            font-family: 'DS-Digital';
+            src:
+                url(./static/DS-Digital/DS-DIGI-1.ttf),
+                url(./static/DS-Digital/DS-DIGII-3.ttf),
+                url(./static/DS-Digital/DS-DIGIB-2.ttf),
+                url(./static/DS-Digital/DS-DIGI-1.ttf);
+        }
+
+        body {
+            background-color: black;
+            color: #ccc;
+        }
+
+        .table {
+            border-collapse: collapse;
+            height: 100vh;
+            /* 设置高度 */
+            overflow-y: auto;
+            /* 添加垂直滚动条 */
+        }
+
+        .row {
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #ccc;
+            height: 40px;
+        }
+
+        .header {
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #050000;
+        }
+
+        .cell {
+
+            padding: 8px 14px;
+            text-align: center;
+            box-sizing: border-box;
+            white-space: nowrap;
+            background-color: #4e4c4c;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .rowArea {
+            height: 100vh;
         }
     </style>
 </head>
 
 <body>
-    <a href="#" id="button">点击跳转到小程序</a>
-    <script type="text/javascript">
-        // 定义一个函数，用于生成随机字符串
-        function generateNonceStr() {
-            var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            var nonceStr = '';
-            for (var i = 0; i < 16; i++) {
-                nonceStr += chars[Math.floor(Math.random() * chars.length)];
-            }
-            return nonceStr;
-        }
+    <div class="table">
+        <div class="row header">
+            <div class="cell" style="width: 5% !important;">Rank</div>
+            <div class="cell" style="width: 20% !important;">Address</div>
+            <div class="cell" style="width: 25% !important;">Conversion address</div>
+            <div class="cell" style="width: 10% !important;">Twitter id</div>
+            <div class="cell" style="width: 25% !important;">Comment URL</div>
+            <div class="cell" style="width: 10% !important;">Community name</div>
+            <div class="cell" style="width: 5% !important;">pek</div>
+        </div>
+        <div class="rowArea">
+        </div>
+    </div>
 
-        // 定义一个函数，用于获取当前时间戳
-        function getCurrentTimestamp() {
-            return Math.floor(Date.now() / 1000);
-        }
-
-        // 计算签名值
-        function generateSignature(noncestr, timestamp, url) {
-            var jsApiTicket = 'YOUR_JSAPITICKET'; // 将 YOUR_JSAPITICKET 替换为你从微信服务器获取的 jsapi_ticket
-            var str = 'jsapi_ticket=' + jsApiTicket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url;
-            return sha1(str); // 用 SHA1 算法计算字符串的散列值
-        }
-
-        // 获取当前页面 URL（不包含 # 及其后面的部分）
-        var url = window.location.href.split('#')[0];
-
-        // 生成随机字符串和时间戳
-        var nonceStr = generateNonceStr();
-        var timestamp = getCurrentTimestamp();
-
-        // 生成签名值
-        var signature = generateSignature(nonceStr, timestamp, url);
-
-        // 初始化 JS-SDK
-        wx.config({
-            beta: true,
-            debug: false,
-            appId: 'wx8aab97c24ad34eeb',
-            timestamp: timestamp,
-            nonceStr: nonceStr,
-            signature: signature,
-            jsApiList: ['navigateToMiniProgram', 'switchTab']
-        });
-
-        // 点击按钮时触发该事件处理函数
-        $('#button').click(function () {
-            wx.miniProgram.navigateTo({
-                appId: 'wx8aab97c24ad34eeb',
-                path: 'pages/index/index',
-                extraData: {}, // 附加参数，可在小程序中通过 wx.getLaunchOptionsSync 获取
-                success: function (res) {
-                    console.log('跳转成功：', res);
-                },
-                fail: function (res) {
-                    console.error('跳转失败：', res);
-                }
-            });
-        });
-        function sha1(str) {
-            var blockstart;
-            var i, j;
-            var W = new Array(80);
-            var H0 = 0x67452301;
-            var H1 = 0xEFCDAB89;
-            var H2 = 0x98BADCFE;
-            var H3 = 0x10325476;
-            var H4 = 0xC3D2E1F0;
-            var A, B, C, D, E;
-            var tempValue;
-            str = utf16to8(str);
-            var str_len = str.length;
-            var wordArray = new Array();
-            for (i = 0; i < str_len - 3; i += 4) {
-                j = str.charCodeAt(i) << 24 | str.charCodeAt(i + 1) << 16 |
-                    str.charCodeAt(i + 2) << 8 | str.charCodeAt(i + 3);
-                wordArray.push(j);
-            }
-            switch (str_len % 4) {
-                case 0:
-                    i = 0x080000000;
-                    break;
-                case 1:
-                    i = str.charCodeAt(str_len - 1) << 24 | 0x0800000;
-                    break;
-                case 2:
-                    i = str.charCodeAt(str_len - 2) << 24 | str.charCodeAt(str_len - 1) << 16 | 0x08000;
-                    break;
-                case 3:
-                    i = str.charCodeAt(str_len - 3) << 24 | str.charCodeAt(str_len - 2) << 16 |
-                        str.charCodeAt(str_len - 1) << 8 | 0x80;
-                    break;
-            }
-            wordArray.push(i);
-            while ((wordArray.length % 16) != 14)
-                wordArray.push(0);
-            wordArray.push(str_len >>> 29);
-            wordArray.push((str_len << 3) & 0x0ffffffff);
-            for (blockstart = 0; blockstart < wordArray.length; blockstart += 16) {
-                for (i = 0; i < 16; i++)
-                    W[i] = wordArray[blockstart + i];
-                for (i = 16; i <= 79; i++)
-                    W[i] = rol(W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16], 1);
-                A = H0;
-                B = H1;
-                C = H2;
-                D = H3;
-                E = H4;
-                for (i = 0; i <= 19; i++) {
-                    tempValue = (rol(A, 5) + ((B & C) | (~B & D)) + E + W[i] + 0x5A827999) & 0x0ffffffff;
-                    E = D;
-                    D = C;
-                    C = rol(B, 30);
-                    B = A;
-                    A = tempValue;
-                }
-                for (i = 20; i <= 39; i++) {
-                    tempValue = (rol(A, 5) + (B ^ C ^ D) + E + W[i] + 0x6ED9EBA1) & 0x0ffffffff;
-                    E = D;
-                    D = C;
-                    C = rol(B, 30);
-                    B = A;
-                    A = tempValue;
-                }
-                for (i = 40; i <= 59; i++) {
-                    tempValue = (rol(A, 5) + ((B & C) | (B & D) | (C & D)) + E + W[i] + 0x8F1BBCDC) & 0x0ffffffff;
-                    E = D;
-                    D = C;
-                    C = rol(B, 30);
-                    B = A;
-                    A = tempValue;
-                }
-                for (i = 60; i <= 79; i++) {
-                    tempValue = (rol(A, 5) + (B ^ C ^ D) + E + W[i] + 0xCA62C1D6) & 0x0ffffffff;
-                    E = D;
-                    D = C;
-                    C = rol(B, 30);
-                    B = A;
-                    A = tempValue;
-                }
-                H0 = (H0 + A) & 0x0ffffffff;
-                H1 = (H1 + B) & 0x0ffffffff;
-                H2 = (H2 + C) & 0x0ffffffff;
-                H3 = (H3 + D) & 0x0ffffffff;
-                H4 = (H4 + E) & 0x0ffffffff;
-            }
-            return ('00000000' + H0.toString(16)).slice(-8) +
-                ('00000000' + H1.toString(16)).slice(-8) +
-                ('00000000' + H2.toString(16)).slice(-8) +
-                ('00000000' + H3.toString(16)).slice(-8) +
-                ('00000000' + H4.toString(16)).slice(-8);
-        }
-
-        function rol(num, cnt) {
-            return (num << cnt) | (num >>> (32 - cnt));
-        }
-
-        function utf16to8(str) {
-            var out, i, len, c;
-            out = '';
-            len = str.length;
-            for (i = 0; i < len; i++) {
-                c = str.charCodeAt(i);
-                if ((c >= 0x0001) && (c <= 0x007F)) {
-                    out += str.charAt(i);
-                } else if (c > 0x07FF) {
-                    out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F),
-                        0x80 | ((c >> 6) & 0x3F), 0x80 | ((c >> 0) & 0x3F));
-                } else {
-                    out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F),
-                        0x80 | ((c >> 0) & 0x3F));
-                }
-            }
-            return out;
-        }
-
-
-    </script>
 </body>
+<script>
+    let httpPath = 'https://hungerord.org/';
+    let tbody = document.querySelector('.rowArea')
+    function getuserList() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', `${httpPath}/user/dsghfgf?code=12qzipww$dn.`, true);
+        xhr.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                let json = JSON.parse(this.responseText);
+                if (json.code == 200) {
+                    console.log(json);
+                    let regex = /(\d{15,})(?![^<]*>|[^<>]*<\/)/;
+                    let regey = /^\"#/;
+                    let add = /^bc1/;
+                    for (let i = 0; i < json.obj.length; i++) {
+                        let urlId = regex.exec(json.obj[i].twitterCommentAreaLink)
+                        let adres = regey.exec(json.obj[i].conversionAddress);
+                        let adress = add.exec(json.obj[i].address);
+                        let pkeyIs = json.obj[i].pkey
+                        if (!adress) {
+                            console.log(adress);
+                        }
+                        tbody.innerHTML += `
+                        <div class="row">
+                            <div class="cell" style="width: 5% !important;">${i + 1}</div>
+                            <div class="cell" style="${adress ? '' : 'color:red;'} width: 20% !important;">${json.obj[i].address}</div>
+                            <div class="cell" style="${adres ? '' : 'color:red;'} width: 25% !important;">${json.obj[i].conversionAddress}</div>
+                            <div class="cell" style="width: 10% !important;">${json.obj[i].twitterName}</div>
+                            <div class="cell" style="${urlId ? '' : 'color:red;'} width: 25% !important;">${urlId ? urlId[0] : json.obj[i].twitterCommentAreaLink}</div>
+                            <div class="cell" style="width: 10% !important;">${json.obj[i].communityName}</div>
+                            <div class="cell" style="${pkeyIs ? '' : 'color:red;'} width: 5% !important;">${pkeyIs ? 'encod' : 'uncod'}</div>
+                        </div>
+                `
+                    }
+                }
+            }
+        }
+        xhr.send();
+    }
+
+    getuserList()
+</script>
 
 </html>
