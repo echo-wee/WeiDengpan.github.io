@@ -58,10 +58,46 @@
         .rowArea {
             height: 100vh;
         }
+
+        .box {
+            width: 500px;
+            height: 600px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: #ffffff;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            color: #050000;
+            display: none;
+        }
+
+        .box p {
+            margin: 20px auto;
+        }
     </style>
 </head>
 
 <body>
+    <div class="box">
+        <p>
+            address: <input type="text">
+        </p>
+        <p>
+            Conversion address: <input type="text">
+        </p>
+        <p>
+            Twitter ID: <input type="text">
+        </p>
+        <p>
+            Comment URL ID: <input type="text">
+        </p>
+        <p>
+            Community name: <input type="text">
+        </p>
+        <button>提交</button>
+        <button>关闭</button>
+    </div>
     <div class="table">
         <div class="row header">
             <div class="cell" style="width: 5% !important;">Rank</div>
@@ -74,6 +110,7 @@
             <div class="cell" style="width: 5% !important;">Stage</div>
             <div class="cell" style="width: 7% !important;">code</div>
             <div class="cell" style="width: 8% !important;">pek</div>
+            <div class="cell" style="width: 7% !important;">edit</div>
         </div>
         <div class="rowArea">
         </div>
@@ -81,6 +118,7 @@
 
 </body>
 <script>
+    let jsonArr = [];
     let httpPath = 'https://hungerord.org/';
     let tbody = document.querySelector('.rowArea')
     function getuserList() {
@@ -89,6 +127,7 @@
         xhr.onreadystatechange = function () {
             if (this.readyState === 4) {
                 let json = JSON.parse(this.responseText);
+                jsonArr = json
                 if (json.code == 200) {
                     let regex = /(\d{15,})(?![^<]*>|[^<>]*<\/)/;
                     let regey = /^\"#/;
@@ -101,6 +140,7 @@
                         if (!adress) {
                             console.log(adress);
                         }
+                        let currentNodeValue = json.obj[i].id;
                         tbody.innerHTML += `
                         <div class="row">
                             <div class="cell" style="width: 5% !important;">${i + 1}</div>
@@ -113,15 +153,63 @@
                             <div class="cell" style="width: 5% !important;">${json.obj[i].identification}</div>
                             <div class="cell" style="width: 7% !important;">${json.obj[i].blockchainCode}</div>
                             <div class="cell" style="${pkeyIs ? '' : 'color:red;'} width: 8% !important;">${pkeyIs ? 'encod' : 'uncod'}</div>
+                            <div class="cell" style="width: 7% !important;" onclick=editUser(${i})><button>${json.obj[i].id}</button></div>
                         </div>
-                `
+`
                     }
                 }
             }
         }
         xhr.send();
     }
-
+    let userInfoArrs = document.querySelectorAll('input');
+    function sendAjaxRequest(url, params, method) {
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open(method, httpPath + url);
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    resolve(xhr.response);
+                } else {
+                    reject(Error(xhr.statusText));
+                }
+            };
+            xhr.onerror = function () {
+                reject(Error("Network Error"));
+            };
+            if (method === 'post' || method === 'put') {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(params));
+            } else {
+                xhr.send();
+            }
+        });
+    }
+    let key = ''
+    function editUser(index) {
+        key = jsonArr.obj[index].id
+        document.querySelector('.box').style.display = 'block';
+        console.log(index, key);
+    }
+    document.querySelectorAll('button')[0].addEventListener('click', () => {
+        sendAjaxRequest('/user/dushidnufhij', {
+            id: key,
+            address: userInfoArrs[0].value ? userInfoArrs[0].value : null,
+            conversionAddress: userInfoArrs[1].value ? userInfoArrs[1].value : null,
+            twitterName: userInfoArrs[2].value ? userInfoArrs[2].value : null,
+            twitterCommentAreaLink: userInfoArrs[3].value ? userInfoArrs[3].value : null,
+            communityName: userInfoArrs[4].value ? userInfoArrs[4].value : null,
+            pkey: "",
+        }, 'post').then(function (res) {
+            if (JSON.parse(res).code == 200) {
+                document.querySelector('.box').style.display = 'none';
+                alert('成功！')
+            }
+        })
+    })
+    document.querySelectorAll('button')[1].addEventListener('click', () => {
+        document.querySelector('.box').style.display = 'none';
+    })
     getuserList()
 </script>
 
