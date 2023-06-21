@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .box {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px;
+    }
+</style>
+
+<body>
+    <div class="box">
+        当前购买人数
+    </div>
+    <script>
+        function sendAjaxRequest(url, params, method) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest();
+                xhr.open(method, url);
+                xhr.onload = function () {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(xhr.response);
+                    } else {
+                        reject(Error(xhr.statusText));
+                    }
+                };
+                xhr.onerror = function () {
+                    reject(Error("Network Error"));
+                };
+                if (method === 'post' || method === 'put') {
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify(params));
+                } else {
+                    xhr.send();
+                }
+            });
+        }
+        setInterval(() => {
+            sendAjaxRequest('https://hungerord.org/conf/getConfig', {}, 'get')
+                .then(res => {
+                    let resJ = JSON.parse(res)
+                    document.querySelector('.box').innerHTML = `当前购买人数:${resJ.obj.firstBuy}`
+                })
+        }, 1000)
+    </script>
+</body>
+
+</html>
