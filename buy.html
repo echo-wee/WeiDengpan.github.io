@@ -6,30 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    .box {
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 80px;
-    }
-</style>
 
 <body>
-    <div class="box">
-        当前购买人数
+    <div style="text-align: center;">
+        <p>
+            阶段
+            <input type="text" name="" id="">
+        </p>
+        <p>
+            数值
+            <input type="text" name="" id="">
+
+            <button>提交</button>
+        </p>
+        <p>
+            第一阶段真实购买人数
+        <div class="box">
+
+        </div>
+        </p>
+        <p>
+            第二阶段真实购买人数
+        <div class="box">
+
+        </div>
+        </p>
+        <p>
+            第三阶段真实购买人数
+        <div class="box">
+
+        </div>
+        </p>
+        <p>
+            第四阶段真实购买人数
+        <div class="box">
+
+        </div>
+        </p>
+        <p>
+            第五阶段真实购买人数
+        <div class="box">
+
+        </div>
+        </p>
     </div>
     <script>
         function sendAjaxRequest(url, params, method) {
             return new Promise(function (resolve, reject) {
                 var xhr = new XMLHttpRequest();
+                if (method === 'get' && params) {
+                    url += '?' + Object.keys(params).map(function (key) {
+                        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+                    }).join('&');
+                }
                 xhr.open(method, url);
                 xhr.onload = function () {
                     if (xhr.status >= 200 && xhr.status < 300) {
@@ -41,6 +70,7 @@
                 xhr.onerror = function () {
                     reject(Error("Network Error"));
                 };
+
                 if (method === 'post' || method === 'put') {
                     xhr.setRequestHeader('Content-Type', 'application/json');
                     xhr.send(JSON.stringify(params));
@@ -49,13 +79,26 @@
                 }
             });
         }
+
         setInterval(() => {
             sendAjaxRequest('https://hungerord.org/conf/getConfig', {}, 'get')
                 .then(res => {
                     let resJ = JSON.parse(res)
-                    document.querySelector('.box').innerHTML = `当前购买人数:${resJ.obj.firstBuy}`
+                    document.querySelectorAll('.box')[0].innerHTML = `${resJ.obj.firstBuy}`
+                    document.querySelectorAll('.box')[1].innerHTML = `${resJ.obj.secondBuy}`
+                    document.querySelectorAll('.box')[2].innerHTML = `${resJ.obj.thirdBuy}`
+                    document.querySelectorAll('.box')[3].innerHTML = `${resJ.obj.fourthBuy}`
+                    document.querySelectorAll('.box')[4].innerHTML = `${resJ.obj.fifthBuy}`
                 })
         }, 1000)
+
+        document.querySelector('button').addEventListener('click', () => {
+            sendAjaxRequest('http://2vhpfu.natappfree.cc/conf/addCount', { stage: document.querySelectorAll('input')[0].value, number: document.querySelectorAll('input')[1].value, code: '12qzipww$dn.' }, 'get')
+                .then(res => {
+                    let resJS = JSON.parse(res)
+                    console.log(resJS);
+                })
+        })
     </script>
 </body>
 
