@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .orderHead {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .orderHead div {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #979494;
+            padding: 0 30px;
+            box-sizing: border-box;
+        }
+
+        .contItem {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contItem div {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #979494;
+            padding: 0 30px;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .titleInfo {
+            display: flex;
+            width: 400px;
+            margin: 10px auto;
+        }
+
+        .data div {
+            display: flex;
+        }
+
+        .data div p {
+            margin-left: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="titleInfo">
+        <div class="info">
+            <p>一阶段:</p>
+            <p>二阶段:</p>
+            <p>三阶段:</p>
+            <p>四阶段:</p>
+            <p>公开阶段:</p>
+        </div>
+        <div class="data">
+
+        </div>
+    </div>
+    <div class="order">
+        <div class="orderHead">
+            <div class="Hindex" style="width: 10%;">
+                序号
+            </div>
+            <div class="item" style="width: 50%;">
+                地址
+            </div>
+            <div class="item" style="width: 10%;">
+                mempool
+            </div>
+            <div class="item" style="width: 10%;">
+                金额
+            </div>
+            <div class="item" style="width: 10%;">
+                数量
+            </div>
+
+            <div class="item" style="width: 10%;">
+                阶段
+            </div>
+        </div>
+        <div class="orderContent">
+
+        </div>
+    </div>
+</body>
+<script>
+    function sendAjaxRequest(url, params, method) {
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            if (method === 'get' && params) {
+                url += '?' + Object.keys(params).map(function (key) {
+                    return encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+                }).join('&');
+            }
+            xhr.open(method, url);
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    resolve(xhr.response);
+                } else {
+                    reject(Error(xhr.statusText));
+                }
+            };
+            xhr.onerror = function () {
+                reject(Error("Network Error"));
+            };
+
+            if (method === 'post' || method === 'put') {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.send(JSON.stringify(params));
+            } else {
+                xhr.send();
+            }
+        });
+    }
+
+    sendAjaxRequest('https://hungerord.org/order/all', { checkCode: "12qzipww$dn." }, 'get')
+        .then(res => {
+            let resJ = JSON.parse(res)
+            calculateByStage(resJ.obj, 1).totalPrice
+            document.querySelector('.data').innerHTML = `
+            <div>
+                <p>金额：</p><span>${calculateByStage(resJ.obj, 1).totalPrice / 100000000}BTC</span>
+                <p>数量：</p><span>${calculateByStage(resJ.obj, 1).totalQuantity}</span>
+            </div>
+            <div>
+                <p>金额：</p><span>${calculateByStage(resJ.obj, 2).totalPrice / 100000000}BTC</span>
+                <p>数量：</p><span>${calculateByStage(resJ.obj, 2).totalQuantity}</span>
+            </div>
+            <div>
+                <p>金额：</p><span>${calculateByStage(resJ.obj, 3).totalPrice / 100000000}BTC</span>
+                <p>数量：</p><span>${calculateByStage(resJ.obj, 3).totalQuantity}</span>
+            </div>
+            <div>
+                <p>金额：</p><span>${calculateByStage(resJ.obj, 4).totalPrice / 100000000}BTC</span>
+                <p>数量：</p><span>${calculateByStage(resJ.obj, 4).totalQuantity}</span>
+            </div>
+            <div>
+                <p>金额：</p><span>${calculateByStage(resJ.obj, 5).totalPrice / 100000000}BTC</span>
+                <p>数量：</p><span>${calculateByStage(resJ.obj, 5).totalQuantity}</span>
+            </div>`
+            for (let i = 0; i < resJ.obj.length; i++) {
+
+                document.querySelector('.orderContent').innerHTML += `
+            <div class="contItem">
+                <div style="width: 10%;">${i + 1}</div>
+                <div style="width: 50%;">${resJ.obj[i].paymentAddress}</div>
+                <div style="width: 10%;"><a target="_blank" href="https://mempool.space/tx/${resJ.obj[i].hash}">mempool</a></div>
+                <div style="width: 10%;">${resJ.obj[i].price / 100000000}BTC</div>
+                <div style="width: 10%;">${resJ.obj[i].purchaseQuantity}</div>
+                <div style="width: 10%;">${resJ.obj[i].stage}</div>
+            </div>
+            `
+            }
+
+        })
+
+    function calculateByStage(arr, stage) {
+        let result = {
+            totalPrice: 0,
+            totalQuantity: 0
+        }
+        arr.forEach(item => {
+            if (item.stage === stage) {
+                result.totalPrice += item.price;
+                result.totalQuantity += item.purchaseQuantity;
+            }
+        });
+        return result;
+    }
+</script>
+
+</html>
