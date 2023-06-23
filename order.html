@@ -79,10 +79,13 @@
     </div>
     <div class="order">
         <div class="orderHead">
-            <div class="Hindex" style="width: 10%;">
+            <div class="Hindex" style="width: 5%;">
                 序号
             </div>
-            <div class="item" style="width: 50%;">
+            <div class="item" style="width: 20%;">
+                购买时间
+            </div>
+            <div class="item" style="width: 45%;">
                 地址
             </div>
             <div class="item" style="width: 10%;">
@@ -91,11 +94,11 @@
             <div class="item" style="width: 10%;">
                 金额
             </div>
-            <div class="item" style="width: 10%;">
+            <div class="item" style="width: 5%;">
                 数量
             </div>
 
-            <div class="item" style="width: 10%;">
+            <div class="item" style="width: 5%;">
                 阶段
             </div>
         </div>
@@ -163,18 +166,21 @@
 
                 document.querySelector('.orderContent').innerHTML += `
             <div class="contItem">
-                <div style="width: 10%;">${i + 1}</div>
-                <div style="width: 50%;">${resJ.obj[i].paymentAddress}</div>
+                <div style="width: 5%;">${i + 1}</div>
+                <div style="width: 20%;">${convertDateStringToNormalDate(resJ.obj[i].createDate)}</div>
+                <div style="width: 45%;">${resJ.obj[i].paymentAddress}</div>
                 <div style="width: 10%;"><a target="_blank" href="https://mempool.space/tx/${resJ.obj[i].hash}">mempool</a></div>
                 <div style="width: 10%;">${resJ.obj[i].price / 100000000}BTC</div>
-                <div style="width: 10%;">${resJ.obj[i].purchaseQuantity}</div>
-                <div style="width: 10%;">${resJ.obj[i].stage}</div>
+                <div style="width: 5%;">${resJ.obj[i].purchaseQuantity}</div>
+                <div style="width: 5%;">${resJ.obj[i].stage}</div>
             </div>
             `
             }
 
         })
-
+    function convertDateStringToNormalDate(dateString) {
+        return new Date(dateString).toLocaleString();
+    }
     function calculateByStage(arr, stage) {
         let result = {
             totalPrice: 0,
